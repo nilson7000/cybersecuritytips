@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia Interativo de Segurança Deep/Dark Web</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .tab-button.active {
+            border-bottom-width: 2px;
+            border-color: #0d9488; /* teal-600 */
+            color: #0d9488; /* teal-600 */
+        }
+        .collapsible-content {
+            display: none;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .collapsible-content.open {
+            display: block;
+            max-height: 3000px; /* Adjusted for potentially longer content */
+        }
+        .table-responsive {
+            overflow-x: auto;
+            margin-bottom: 1rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #e5e7eb; /* gray-200 */
+            padding: 0.75rem;
+            text-align: left;
+            vertical-align: top;
+            font-size: 0.875rem; /* Slightly smaller font for tables */
+        }
+        th {
+            background-color: #f3f4f6; /* gray-100 */
+            font-weight: 600;
+        }
+        h2 { margin-top: 1.5rem; margin-bottom: 0.75rem; font-size: 1.5rem; font-weight: 600; color: #374151; /* gray-700 */ }
+        h3 { margin-top: 1.25rem; margin-bottom: 0.5rem; font-size: 1.25rem; font-weight: 600; color: #4b5563; /* gray-600 */ }
+        h4 { margin-top: 1rem; margin-bottom: 0.25rem; font-size: 1.125rem; font-weight: 600; color: #4b5563; /* gray-600 */ }
+        p { margin-bottom: 0.75rem; line-height: 1.6; }
+        ul, ol { margin-left: 1.5rem; margin-bottom: 0.75rem; list-style-position: outside; }
+        li { margin-bottom: 0.25rem; }
+        .icon { margin-right: 0.5rem; }
+        .card { background-color: #ffffff; border-radius: 0.5rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06); padding: 1.5rem; margin-bottom: 1.5rem; }
+        .intro-paragraph { font-size: 1.125rem; color: #4b5563; /* gray-600 */ margin-bottom: 1rem; }
+        .reference-list li { margin-bottom: 0.5rem; }
+        .reference-list a, .content-link { color: #0d9488; text-decoration: underline; }
+        .reference-list a:hover, .content-link:hover { color: #0f766e; }
+        .gemini-input-section { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #e5e7eb; }
+        .gemini-output { margin-top: 1rem; padding: 1rem; background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 0.375rem; min-height: 100px; white-space: pre-wrap; }
+        .loading-spinner {
+            border: 4px solid #f3f4f6; /* gray-100 */
+            border-top: 4px solid #0d9488; /* teal-600 */
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            margin: 0.5rem auto;
+        }
+        .warning-box {
+            background-color: #fffbeb; /* yellow-50 */
+            border: 1px solid #fef3c7; /* yellow-200 */
+            color: #b45309; /* amber-700 */
+            padding: 1rem;
+            border-radius: 0.375rem;
+            margin-bottom: 1rem;
+        }
+        .warning-box strong { color: #92400e; /* amber-800 */ }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+        <header class="mb-8 text-center">
+            <h1 class="text-3xl sm:text-4xl font-bold text-slate-700">🛡️ Guia Interativo de Segurança Avançada na Deep e Dark Web (2025)</h1>
+        </header>
+
+        <nav class="mb-8 bg-white shadow-md rounded-lg">
+            <ul class="flex flex-wrap justify-center sm:justify-start border-b border-gray-200">
+                <li><button class="tab-button active py-4 px-6 text-sm font-medium text-gray-500 hover:text-teal-600 focus:outline-none" data-tab="introducao">🌐 Introdução</button></li>
+                <li><button class="tab-button py-4 px-6 text-sm font-medium text-gray-500 hover:text-teal-600 focus:outline-none" data-tab="ferramentas">🛠️ Ferramentas Essenciais</button></li>
+                <li><button class="tab-button py-4 px-6 text-sm font-medium text-gray-500 hover:text-teal-600 focus:outline-none" data-tab="opsec">🎭 OPSEC Avançada</button></li>
+                <li><button class="tab-button py-4 px-6 text-sm font-medium text-gray-500 hover:text-teal-600 focus:outline-none" data-tab="ameacas">🦠 Ameaças Atuais</button></li>
+                <li><button class="tab-button py-4 px-6 text-sm font-medium text-gray-500 hover:text-teal-600 focus:outline-none" data-tab="fortaleza">🏰 Fortaleza Digital</button></li>
+                <li><button class="tab-button py-4 px-6 text-sm font-medium text-gray-500 hover:text-teal-600 focus:outline-none" data-tab="ecossistema">🌍 Ecossistema da Dark Web</button></li>
+                <li><button class="tab-button py-4 px-6 text-sm font-medium text-gray-500 hover:text-teal-600 focus:outline-none" data-tab="conclusoes">🏁 Conclusões</button></li>
+                <li><button class="tab-button py-4 px-6 text-sm font-medium text-gray-500 hover:text-teal-600 focus:outline-none" data-tab="referencias">📚 Referências</button></li>
+            </ul>
+        </nav>
+
+        <main>
+            <div id="introducao" class="tab-content active">
+                <div class="card">
+                    <h2><span class="icon">🌐</span>Seção 1: Desmistificando a Internet Oculta: Deep Web vs. Dark Web em Detalhes</h2>
+                    <p class="intro-paragraph">Esta seção explora as camadas menos visíveis da internet, diferenciando claramente a Deep Web, composta por conteúdo não indexado, da Dark Web, um subconjunto intencionalmente oculto que requer software especializado. Compreender estas distinções é o primeiro passo para uma navegação segura e consciente.</p>
+                    
+                    <button class="collapsible-trigger bg-slate-200 text-slate-700 py-2 px-4 rounded-md hover:bg-slate-300 w-full text-left mb-2 font-semibold">Deep Web: O Conteúdo Não Indexado (Clique para expandir/recolher)</button>
+                    <div class="collapsible-content p-4 border border-slate-300 rounded-md mb-4">
+                        <p>A Deep Web abrange todas as partes da internet que não são rastreadas e indexadas por motores de busca padrão. Contrariamente à crença popular, a Deep Web é significativamente maior do que a Surface Web. O acesso a estes recursos é geralmente realizado através de navegadores web normais, como Firefox, Chrome ou Safari, mas frequentemente requer formas de autenticação, como nomes de usuário e senhas, ou o conhecimento de um URL específico para acesso direto.</p>
+                        <p>O conteúdo típico da Deep Web inclui uma vasta gama de informações e serviços legítimos e quotidianos: bancos de dados privados, intranets corporativas, arquivos académicos, registos médicos, documentos legais, contas de serviços de streaming (como Netflix), contas de email e perfis de redes sociais protegidos por login. Essencialmente, qualquer página que necessite de credenciais de acesso ou que tenha deliberadamente bloqueado os crawlers de motores de busca faz parte da Deep Web.</p>
+                        <p>A segurança na Deep Web é inerentemente ligada à robustez das plataformas que hospedam o conteúdo. Dado que a Deep Web contém informações valiosas, como credenciais de login e dados pessoais, torna-se um alvo atrativo para fraudadores. Estes agentes maliciosos podem tentar roubar esses dados para vendê-los posteriormente na Dark Web, sublinhando a necessidade de práticas de segurança robustas mesmo para o acesso a conteúdos aparentemente benignos na Deep Web.</p>
+                    </div>
+
+                    <button class="collapsible-trigger bg-slate-200 text-slate-700 py-2 px-4 rounded-md hover:bg-slate-300 w-full text-left mb-2 font-semibold">Dark Web: O Subconjunto Intencionalmente Oculto (Clique para expandir/recolher)</button>
+                    <div class="collapsible-content p-4 border border-slate-300 rounded-md mb-4">
+                        <p>A Dark Web é um subconjunto específico da Deep Web que é <strong>intencionalmente</strong> oculto e exige software especializado para ser acedida, sendo o Tor Browser o exemplo mais conhecido. Embora utilize a mesma infraestrutura de rede física que a Surface e a Deep Web, a Dark Web opera de forma distinta, com todo o seu tráfego sendo criptografado. Ela funciona sobre redes de sobreposição (overlay networks), conhecidas como darknets (como Tor e I2P), que são projetadas para anonimizar os seus utilizadores e as suas atividades online. O acesso a sites na Dark Web geralmente requer o conhecimento exato do URL (muitas vezes terminados em <code>.onion</code> para serviços Tor ou <code>.i2p</code> para serviços I2P), uma vez que não existe indexação por motores de busca convencionais.</p>
+                        <h4>Conteúdo da Dark Web:</h4>
+                        <p>O conteúdo da Dark Web é diversificado, abrangendo tanto atividades ilícitas como usos legítimos:</p>
+                        <ul class="list-disc ml-5 space-y-1">
+                            <li><strong>Uso Malicioso:</strong> A Dark Web é frequentemente associada a marketplaces para a venda de bens e serviços ilegais, como drogas, armas, dados roubados (cartões de crédito, credenciais), e malware. Também hospeda fóruns para a discussão de ciberataques, partilha de vulnerabilidades exploráveis, e troca de ferramentas e dicas para atividades fraudulentas. As transações financeiras nestes meios são frequentemente realizadas com criptomoedas, como Bitcoin, para manter um grau de anonimato.</li>
+                            <li><strong>Uso Legítimo:</strong> Apesar da sua reputação, a Dark Web serve como uma plataforma vital para a comunicação anónima e segura. É utilizada por dissidentes políticos, jornalistas que trabalham em ambientes hostis, denunciantes (whistleblowers) e defensores da liberdade de expressão que necessitam de proteger a sua identidade. Organizações como o Facebook e o motor de busca DuckDuckGo mantêm versões <code>.onion</code> dos seus sites para permitir o acesso anónimo. É importante notar que a tecnologia Tor, fundamental para o acesso à Dark Web, foi inicialmente desenvolvida pelo Laboratório de Pesquisa Naval dos EUA (NRL) com o objetivo de proteger as comunicações de inteligência.</li>
+                        </ul>
+                        <p class="mt-4">A distinção entre Deep Web e Dark Web é crucial. A vasta maioria da internet "oculta" (Deep Web) não é inerentemente maliciosa; é simplesmente o conjunto de páginas não indexadas publicamente, muitas das quais são protegidas por logins por razões de privacidade e funcionalidade normais (como o seu email ou banco online). A Dark Web, por outro lado, é uma pequena fração da Deep Web, construída especificamente para anonimato e, por isso, atrai tanto atividades legítimas que requerem privacidade extrema quanto atividades ilícitas. Esta dualidade funcional e moral é uma característica intrínseca da Dark Web e deve ser compreendida para uma avaliação equilibrada dos seus riscos e utilidades. A segurança, portanto, é relevante para todos os utilizadores, independentemente das suas intenções, mas as ameaças específicas e as contramedidas podem variar.</p>
+                    </div>
+                    
+                    <h3>Tabela: Deep Web vs. Dark Web - Comparativo Detalhado</h3>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Característica</th>
+                                    <th>Deep Web</th>
+                                    <th>Dark Web</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Acessibilidade</strong></td>
+                                    <td>Navegadores normais (Firefox, Chrome); geralmente requer login, senhas ou URL direto.</td>
+                                    <td>Software especial (ex: Tor Browser); URLs específicos (.onion,.i2p).</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Indexação por Motores de Busca</strong></td>
+                                    <td>Não indexada por motores de busca padrão.</td>
+                                    <td>Não indexada por nenhum motor de busca.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Criptografia Padrão</strong></td>
+                                    <td>Não inerentemente criptografada (depende do site específico, ex: HTTPS).</td>
+                                    <td>Todo o tráfego é criptografado através de redes de sobreposição (darknets).</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Tamanho Relativo</strong></td>
+                                    <td>Vasta maioria da internet.</td>
+                                    <td>Pequena fração da Deep Web.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Exemplos de Conteúdo</strong></td>
+                                    <td>Contas bancárias online, emails, bases de dados académicas, arquivos internos de empresas.</td>
+                                    <td>Marketplaces ilegais, fóruns de discussão anónimos, sites de denúncia, versões.onion de sites legítimos.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Principais Riscos</strong></td>
+                                    <td>Roubo de credenciais, acesso não autorizado a dados pessoais/financeiros.</td>
+                                    <td>Exposição a conteúdo ilegal/perturbador, malware, golpes, deanonimização, vigilância.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Principais Usos Legítimos</strong></td>
+                                    <td>Acesso a serviços online privados, pesquisa académica, gestão de contas pessoais.</td>
+                                    <td>Jornalismo investigativo, ativismo, comunicação segura para dissidentes, acesso à informação em regimes censurados.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="ferramentas" class="tab-content">
+                <div class="card">
+                    <h2><span class="icon">🛠️</span>Seção 2: Fundamentos do Anonimato: Escolhendo sua Rede e Ferramentas Base</h2>
+                    <p class="intro-paragraph">Esta seção detalha as redes de anonimato como Tor, I2P e Freenet, os sistemas operacionais seguros como Tails, Whonix e Qubes OS, e o uso correto de VPNs. A escolha destas ferramentas é crucial e depende do seu modelo de ameaça e objetivos.</p>
+
+                    <button class="collapsible-trigger bg-slate-200 text-slate-700 py-2 px-4 rounded-md hover:bg-slate-300 w-full text-left mb-2 font-semibold">Visão Geral das Redes de Anonimato (Clique para expandir/recolher)</button>
+                    <div class="collapsible-content p-4 border border-slate-300 rounded-md mb-4">
+                        <h4>Tor (The Onion Router): O Portal Principal</h4>
+                        <p>Rede mais usada para aceder à Dark Web. Utiliza "onion routing" (múltiplas camadas de criptografia) através de relays voluntários. O Tor Browser (baseado no Firefox ESR, versão estável 14.5.2 em Maio/2025) é pré-configurado para Tor. Mecanismos: Onion Routing, Onion Services (.onion), Relays e Bridges (obfs4, Snowflake, Webtunnel). Atualizações recentes: "Connection Assist" (Android), Oniux. Limitações: não é anonimato absoluto, vulnerável a correlação de tráfego, exit nodes podem ver tráfego não-HTTPS.</p>
+                        
+                        <h4>I2P (Invisible Internet Project): Uma Alternativa Focada Internamente</h4>
+                        <p>Rede P2P descentralizada, otimizada para comunicações internas e "eepsites" (.i2p). Usa "Garlic Routing". Tráfego não sai para clearnet por defeito. Túneis unidirecionais e de curta duração. Ideal para partilha de ficheiros, mensagens P2P (I2P-Bote), dApps. Desenvolvimentos recentes focados em criptografia e novo transporte UDP (SSU2).</p>
+
+                        <h4>Freenet: Compartilhamento Descentralizado e Resistente à Censura</h4>
+                        <p>Software P2P para partilha de dados com foco em privacidade e resistência à censura ("freesites"). Modos: Darknet (conexões manuais entre confiáveis) e Opennet (conexões automáticas). Distinguir: Hyphanet (Freenet original, com anonimato embutido) e Nova Freenet (Locutus/Freenet 2023, reescrita em Rust, anonimato não embutido por defeito, foca em plataforma para dApps).</p>
+                        <p><strong>Dinâmica da Censura:</strong> A eficácia de pontes Tor (obfs4, Snowflake, Webtunnel) varia e está em constante evolução devido à corrida armamentista com censores.</p>
+                    </div>
+
+                    <button class="collapsible-trigger bg-slate-200 text-slate-700 py-2 px-4 rounded-md hover:bg-slate-300 w-full text-left mb-2 font-semibold">Sistemas Operacionais Seguros (Clique para expandir/recolher)</button>
+                    <div class="collapsible-content p-4 border border-slate-300 rounded-md mb-4">
+                        <h4>🐧 Tails OS (The Amnesic Incognito Live System)</h4>
+                        <p>SO "vivo" (baseado em Debian) que arranca de USB/DVD, não deixa rastos no HDD (amnésico). Todo tráfego via Tor. Armazenamento persistente opcional. Ferramentas: Tor Browser, GnuPG, KeePassXC, OnionShare, MAT2. Versão atual (Maio/2025): 6.15.1. Ideal para anonimato temporário, máquinas não confiáveis.</p>
+
+                        <h4>🕸️ Whonix: Isolamento Robusto com Gateway e Workstation</h4>
+                        <p>Duas VMs: Whonix-Gateway (só para Tor) e Whonix-Workstation (aplicações). Workstation isolada da internet direta. Baseado em Kicksecure. Previne fugas de IP mesmo se Workstation comprometida. Pode rodar em KVM/VirtualBox ou integrado com Qubes OS.</p>
+
+                        <h4>🏰 Qubes OS + Whonix: Compartimentalização Máxima</h4>
+                        <p>SO focado em segurança por isolamento (hipervisor Xen, "qubes" - VMs separadas). Integra-se com Whonix (AppVMs usam `sys-whonix` como gateway). Privacidade depende da correta integração com Whonix. Mantém Boletins de Segurança (QSBs).</p>
+                    </div>
+                    
+                    <button class="collapsible-trigger bg-slate-200 text-slate-700 py-2 px-4 rounded-md hover:bg-slate-300 w-full text-left mb-2 font-semibold">VPNs na Dark Web: Quando e Como Usar (Clique para expandir/recolher)</button>
+                    <div class="collapsible-content p-4 border border-slate-300 rounded-md mb-4">
+                        <p>Uso de VPNs com Tor é debatido. VPN mascara IP, mas transfere confiança para o provedor VPN.</p>
+                        <h4>Critérios Essenciais para Escolha de VPN (se usada com Tor):</h4>
+                        <ul>
+                            <li><strong>Jurisdição:</strong> Fora de alianças de vigilância (5/9/14 Eyes), sem leis de retenção de dados. Ex: Panamá, Suíça.</li>
+                            <li><strong>Política de Não-Logs:</strong> Auditada por terceiros. Ex: NordVPN, ExpressVPN, ProtonVPN.</li>
+                            <li><strong>Servidores RAM-Only:</strong> Nenhum dado armazenado permanentemente.</li>
+                            <li><strong>Criptografia Forte:</strong> AES-256.</li>
+                            <li><strong>Protocolos Seguros:</strong> OpenVPN, WireGuard. Evitar PPTP.</li>
+                            <li><strong>Kill Switch:</strong> Essencial para bloquear tráfego se VPN cair.</li>
+                            <li><strong>Ofuscação (Stealth VPN):</strong> Disfarça tráfego VPN como HTTPS.</li>
+                        </ul>
+                        <p><strong>Limitações:</strong> VPNs não anonimizam por si só. Eficácia limitada contra atores estatais. VPNs gratuitas são desaconselhadas.</p>
+                        <h4>Configurações Comuns:</h4>
+                        <ul>
+                            <li><strong>Tor sobre VPN (Mais Comum):</strong> Conecta VPN, depois Tor. ISP vê tráfego VPN. VPN vê IP real e uso do Tor.</li>
+                            <li><strong>VPN sobre Tor (Rara e Complexa):</strong> Conecta Tor, depois VPN. VPN não vê IP real. Mais difícil, pode ser prejudicial.</li>
+                        </ul>
+                        <p>Para modelos de ameaça elevados, Whonix/Tails são mais apropriados. VPN pode ser camada inicial para ofuscar uso do Tor do ISP.</p>
+                    </div>
+
+                    <h3>Tabela: Redes de Anonimato para Acesso à Dark Web</h3>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Rede</th>
+                                    <th>Tecnologia Principal</th>
+                                    <th>Prós</th>
+                                    <th>Contras</th>
+                                    <th>Casos de Uso Ideais</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Tor</strong></td>
+                                    <td>Onion Routing, Rede de Relays, Onion Services</td>
+                                    <td>Ampla adoção, fácil de usar (Tor Browser), acesso à clearnet e .onion, pontes</td>
+                                    <td>Vulnerável a correlação de tráfego, exit nodes podem ver tráfego não-HTTPS, bloqueios</td>
+                                    <td>Navegação anónima geral, comunicação segura, contorno de censura</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>I2P</strong></td>
+                                    <td>Garlic Routing, Rede P2P, Eepsites (.i2p)</td>
+                                    <td>Foco em serviços internos, descentralizado, túneis de curta duração</td>
+                                    <td>Não ideal para clearnet por defeito, curva de aprendizagem, menos utilizadores</td>
+                                    <td>Hospedagem anónima, partilha P2P, dApps, comunicação interna</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Freenet (Hyphanet)</strong></td>
+                                    <td>Armazenamento P2P Criptografado, Freesites</td>
+                                    <td>Resistência à censura, armazenamento descentralizado, anonimato (modo Darknet)</td>
+                                    <td>Conteúdo estático, lento, menos interativo</td>
+                                    <td>Publicação resistente à censura, partilha de ficheiros anónima</td>
+                                </tr>
+                                 <tr>
+                                    <td><strong>Nova Freenet (Locutus)</strong></td>
+                                    <td>Key-Value Store Global, Contratos WebAssembly</td>
+                                    <td>Plataforma flexível para dApps, interação em tempo real</td>
+                                    <td>Anonimato não embutido, mais recente</td>
+                                    <td>Desenvolvimento de dApps (anonimato opcional)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 class="mt-6">Tabela: Sistemas Operacionais Seguros para Dark Web</h3>
+                     <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>SO</th>
+                                    <th>Baseado em</th>
+                                    <th>Foco Principal</th>
+                                    <th>Mecanismo de Anonimato</th>
+                                    <th>Persistência</th>
+                                    <th>Isolamento</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Tails OS</strong></td>
+                                    <td>Debian</td>
+                                    <td>Privacidade, Amnésia</td>
+                                    <td>Todo o tráfego via Tor</td>
+                                    <td>Amnésico (opcional persistente)</td>
+                                    <td>SO como um todo; sandbox Tor Browser</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Whonix</strong></td>
+                                    <td>Debian (Kicksecure)</td>
+                                    <td>Anonimato, Anti-leak</td>
+                                    <td>Gateway Tor dedicado</td>
+                                    <td>Persistente (VMs)</td>
+                                    <td>Forte (Workstation vs Gateway)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Qubes OS + Whonix</strong></td>
+                                    <td>Xen, Linux</td>
+                                    <td>Segurança por Compartimentalização</td>
+                                    <td>Whonix-Gateway para AppVMs</td>
+                                    <td>Persistente (Qubes e VMs)</td>
+                                    <td>Máximo (entre qubes e hardware)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <h3 class="mt-6">Checklist: Seleção de VPN para Uso com a Dark Web</h3>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Critério</th>
+                                    <th>Importância</th>
+                                    <th>Pontos de Atenção</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>Jurisdição</strong></td><td>Evitar 5/9/14 Eyes, leis de retenção de dados.</td><td>Leis mudam; afiliações complexas.</td></tr>
+                                <tr><td><strong>Política de Não-Logs (Auditada)</strong></td><td>Não registar atividades; auditoria independente.</td><td>Escopo da auditoria; "nenhum log" é vago.</td></tr>
+                                <tr><td><strong>Servidores RAM-Only</strong></td><td>Dados não armazenados em discos.</td><td>Verificar se toda a rede é RAM-only.</td></tr>
+                                <tr><td><strong>Criptografia</strong></td><td>AES-256 ou superior.</td><td>Implementações fracas comprometem.</td></tr>
+                                <tr><td><strong>Protocolos VPN</strong></td><td>OpenVPN, WireGuard.</td><td>Evitar PPTP.</td></tr>
+                                <tr><td><strong>Kill Switch</strong></td><td>Bloqueia tráfego se VPN cair.</td><td>Testar eficácia.</td></tr>
+                                <tr><td><strong>Ofuscação (Stealth VPN)</strong></td><td>Disfarça tráfego VPN (útil contra censura).</td><td>Pode reduzir velocidade.</td></tr>
+                                <tr><td><strong>Histórico de Segurança</strong></td><td>Sem incidentes graves conhecidos.</td><td>Pesquisar relatórios independentes.</td></tr>
+                                <tr><td><strong>Transparência da Empresa</strong></td><td>Clareza sobre propriedade, políticas.</td><td>Empresas opacas são alerta.</td></tr>
+                                <tr><td><strong>Pagamentos Anônimos</strong></td><td>Cripto (Monero), dinheiro.</td><td>Verificar se processo é genuinamente anónimo.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="opsec" class="tab-content">
+                 <div class="card">
+                    <h2><span class="icon">🎭</span>Seção 3: Guia Passo a Passo para Segurança Avançada na Dark Web (OPSEC Essencial)</h2>
+                    <p class="intro-paragraph">A Segurança Operacional (OPSEC) é vital. Esta seção cobre o fortalecimento do ambiente de navegação, prevenção de vazamentos, criação de personas digitais isoladas e transações financeiras anônimas.</p>
+
+                    <button class="collapsible-trigger bg-slate-200 text-slate-700 py-2 px-4 rounded-md hover:bg-slate-300 w-full text-left mb-2 font-semibold">Configuração e Fortalecimento do Ambiente (Clique para expandir/recolher)</button>
+                    <div class="collapsible-content p-4 border border-slate-300 rounded-md mb-4">
+                        <h4>Além do Tor Browser: Hardening Essencial</h4>
+                        <ul>
+                            <li><strong>Bloqueio de Scripts (NoScript):</strong> Tor Browser gerencia via níveis de segurança ("Padrão", "Mais Seguro", "O Mais Seguro"). "O Mais Seguro" desabilita JS, máxima proteção mas quebra sites.</li>
+                            <li><strong>Anti-Fingerprinting:</strong> Tor Browser resiste a fingerprinting (Canvas, WebGL, AudioContext). Evitar adicionar extensões (CanvasBlocker, Privacy Badger) para não tornar fingerprint único. Objetivo: "misturar-se na multidão".</li>
+                        </ul>
+                        <h4>Prevenção de Vazamentos Críticos (IP, DNS, WebRTC)</h4>
+                        <ul>
+                            <li><strong>Vazamentos de IP (IPv4/IPv6):</strong> Tor Browser previne. Se usar VPN antes, VPN deve ter proteção ou IPv6 desabilitado. Kill switch essencial.</li>
+                            <li><strong>Vazamentos de DNS:</strong> Tor Browser encaminha DNS via Tor. VPN deve usar DNS privado e criptografado.</li>
+                            <li><strong>Vazamentos de WebRTC:</strong> Tor Browser controla/desabilita APIs WebRTC problemáticas.</li>
+                            <li><strong>Firewall:</strong> Configurar para permitir apenas conexões do Tor.</li>
+                            <li><strong>Desabilitar Teredo (Windows):</strong> Pode contornar VPN.</li>
+                            <li>Testes regulares (ipleak.net, dnsleaktest.com) são recomendados.</li>
+                        </ul>
+                        <h4>Uso de Pontes Tor (Bridges)</h4>
+                        <p>Relays Tor não listados para contornar censura. Tipos: obfs4 (tráfego aleatório), Snowflake (proxies efémeros), Webtunnel (tráfego HTTPS). Eficácia varia por região. Obter via site Tor, email, Telegram (@GetBridgesBot).</p>
+                    </div>
+
+                    <button class="collapsible-trigger bg-slate-200 text-slate-700 py-2 px-4 rounded-md hover:bg-slate-300 w-full text-left mb-2 font-semibold">Criação e Manutenção de Personas Digitais Isoladas (Clique para expandir/recolher)</button>
+                    <div class="collapsible-content p-4 border border-slate-300 rounded-md mb-4">
+                        <h4>Princípios Fundamentais de OPSEC para Personas:</h4>
+                        <ul>
+                            <li><strong>Isolamento Completo:</strong> Sem cruzamento de informações, contas, hábitos, metadados entre personas ou com identidade real.</li>
+                            <li><strong>Consistência e Credibilidade:</strong> Detalhes fabricados, mas plausíveis.</li>
+                            <li><strong>Evitar Informações Reais:</strong> Nomes, fotos, emails, etc. Limpar metadados de ficheiros (MAT2).</li>
+                            <li><strong>Estilo de Escrita (Estilometria):</strong> Variar estilo entre personas.</li>
+                        </ul>
+                        <h4>Ferramentas e Técnicas para Isolamento:</h4>
+                        <ul>
+                            <li><strong>Sistemas Operacionais Dedicados:</strong> Qubes OS + Whonix (múltiplos gateways Tor) é o mais robusto. Múltiplas VMs (Tails/Whonix) com cuidado.</li>
+                            <li><strong>Navegadores e Perfis:</strong> Separados por persona.</li>
+                            <li><strong>Redes e IPs:</strong> Circuitos Tor diferentes por persona. Evitar mesma Wi-Fi pública.</li>
+                            <li><strong>Dispositivos Dedicados (Burner Devices):</strong> Para OPSEC extremo.</li>
+                            <li><strong>Comunicações Seguras e Anônimas por Persona:</strong>
+                                <ul>
+                                    <li><em>Email Criptografado sobre Tor:</em> ProtonMail (.onion), Tuta (.onion, ex-Tutanota), SecMail.i2p, OnionMail. Atenção a políticas de verificação e jurisdição.</li>
+                                    <li><em>Mensageiros P2P Anônimos:</em> Session (baseado no Signal, sem nº telefone, rede Lokinet), Briar (Tor por defeito, Wi-Fi/Bluetooth offline), Cwtch (Tor v3 onion services), Ricochet Refresh (Tor hidden service por contacto).</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <button class="collapsible-trigger bg-slate-200 text-slate-700 py-2 px-4 rounded-md hover:bg-slate-300 w-full text-left mb-2 font-semibold">Transações Financeiras Anônimas (Clique para expandir/recolher)</button>
+                    <div class="collapsible-content p-4 border border-slate-300 rounded-md mb-4">
+                        <h4>💰 Monero (XMR): A Criptomoeda de Privacidade por Excelência</h4>
+                        <p>Características: Ring Signatures (ofusca remetente), Stealth Addresses (endereços únicos por transação), RingCT (oculta montantes). Segurança depende da carteira e OPSEC. Cenário regulatório hostil (Binance, Kraken removeram XMR; LocalMonero fechou). Usar carteiras oficiais, software atualizado, cautela com exchanges, Monero sobre Tor.</p>
+                        <h4>Mixers de Bitcoin (CoinJoin)</h4>
+                        <p>Tentam quebrar rastreabilidade misturando moedas (Whirlpool/Samourai, Wasabi Wallet). Eficácia depende do "anonymity set". Riscos: segurança (confiança em mixers centralizados), privacidade (logs), contaminação (moedas sinalizadas). Status legal perigoso (caso Samourai Wallet).</p>
+                        <h4>Segurança de Carteiras de Criptomoedas (OPSEC Essencial)</h4>
+                        <ul>
+                            <li><strong>Air-Gapping:</strong> Chaves privadas offline (PC dedicado, hardware wallet).</li>
+                            <li><strong>Criptografia de Ficheiros de Carteira:</strong> VeraCrypt (volumes ocultos), LUKS. Chaves na RAM enquanto montado.</li>
+                            <li><strong>Hardware Wallets:</strong> Ledger, Trezor. Comprar do fabricante.</li>
+                            <li><strong>Gestão Segura de Seed Phrases:</strong> Nunca digital. Escrita física (metal). Múltiplas cópias seguras. Passphrase BIP39 ("25ª palavra").</li>
+                            <li><strong>OPSEC Geral:</strong> 2FA (TOTP), senhas fortes, emails burner, vigilância contra phishing.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="ameacas" class="tab-content">
+                <div class="card">
+                    <h2><span class="icon">🦠</span>Seção 4: Compreendendo e Mitigando Ameaças Persistentes na Dark Web</h2>
+                    <p class="intro-paragraph">A Dark Web é um ambiente propício a ameaças. Esta seção aborda o panorama atual de malware, a realidade dos exploits zero-day, técnicas de deanonimização, o fenômeno do Cybercrime-as-a-Service (CaaS) e o uso de honeypots.</p>
+
+                    <button class="collapsible-trigger bg-slate-200 text-slate-700 py-2 px-4 rounded-md hover:bg-slate-300 w-full text-left mb-2 font-semibold">Panorama Atual de Malware (Q1 2025 e Tendências 2024) (Clique para expandir/recolher)</button>
+                    <div class="collapsible-content p-4 border border-slate-300 rounded-md mb-4">
+                        <h4>Principais Ameaças:</h4>
+                        <ul>
+                            <li><strong>Downloaders:</strong> SocGholish (48% deteções Q1 2025, via falsas atualizações, instala RATs/ransomware), ZPHP (instala NetSupport, Lumma Stealer).</li>
+                            <li><strong>Infostealers:</strong> Aumento de 84% via phishing em 2024. Ex: TeleGrab, Agent Tesla, Arechclient2, Lumma Stealer. 1.7 mil milhões de credenciais roubadas em fóruns Dark Web (2024).</li>
+                            <li><strong>RATs (Remote Access Trojans):</strong> Agent Tesla, Arechclient2, VenomRAT, NetSupport, AsyncRAT.</li>
+                            <li><strong>Ransomware:</strong> Aumento de 25% na atividade na Dark Web. Abordagem multiplataforma (Windows/Linux). Grupos ativos: RansomHub, LockBit 3.0, Play, Medusa.</li>
+                        </ul>
+                        <h4>Vetores de Infecção (Q1 2025):</h4>
+                        <p>Malvertisement (principal, via SocGholish/ZPHP), Malspam (Agent Tesla), Dropped, Múltiplos vetores.</p>
+                        <h4>Alvos:</h4>
+                        <p>Manufatura (mais visado globalmente). Ásia-Pacífico (maior número de ataques em 2024).</p>
+                    </div>
+
+                    <button class="collapsible-trigger bg-slate-200 text-slate-700 py-2 px-4 rounded-md hover:bg-slate-300 w-full text-left mb-2 font-semibold">A Realidade dos Exploits Zero-Day (Clique para expandir/recolher)</button>
+                    <div class="collapsible-content p-4 border border-slate-300 rounded-md mb-4">
+                        <p>Exploram vulnerabilidades desconhecidas ou não corrigidas.</p>
+                        <h4>Tendências 2024:</h4>
+                        <p>75 zero-days explorados "in the wild". Foco em tecnologias empresariais (segurança, rede) e plataformas de utilizador final (Chrome mais visado).</p>
+                        <h4>Atores Envolvidos:</h4>
+                        <p>Estatais (China, Coreia do Norte), Commercial Surveillance Vendors (CSVs), grupos financeiros.</p>
+                        <h4>Exemplo Recente (Maio 2025):</h4>
+                        <p>Marbled Dust (Turquia) explorou CVE-2025-27920 (Output Messenger) para espionagem regional.</p>
+                        <h4>Mitigação:</h4>
+                        <p>Aplicação atempada de patches pós-divulgação.</p>
+                    </div>
+
+                    <button class="collapsible-trigger bg-slate-200 text-slate-700 py-2 px-4 rounded-md hover:bg-slate-300 w-full text-left mb-2 font-semibold">Técnicas de Deanonimização em Foco (Clique para expandir/recolher)</button>
+                    <div class="collapsible-content p-4 border border-slate-300 rounded-md mb-4">
+                        <h4>Fingerprinting Digital Avançado:</h4>
+                        <p>Recolha de características do navegador, SO, dispositivo, rede para criar "impressão digital" única. Técnicas: browser, Canvas, Audio, WebGL, device, behavioral, TLS/SSL, clock skew, OS fingerprinting. Crawlers subestimam prevalência. Mitigação: Tor Browser, LibreWolf, Mullvad Browser, desabilitar scripts, cautela com extensões.</p>
+                        <h4>Análise de Tráfego e Capacidades de APTs:</h4>
+                        <p>APTs (atores sofisticados, estatais/criminosos) usam técnicas avançadas (spear-phishing, zero-days, malware personalizado). Podem tentar deanonimizar utilizadores Tor/VPN com vastos recursos (comprometimento de nós, correlação de tráfego).</p>
+                    </div>
+
+                    <button class="collapsible-trigger bg-slate-200 text-slate-700 py-2 px-4 rounded-md hover:bg-slate-300 w-full text-left mb-2 font-semibold">Cybercrime-as-a-Service (CaaS) e o Comércio Ilícito (Clique para expandir/recolher)</button>
+                    <div class="collapsible-content p-4 border border-slate-300 rounded-md mb-4">
+                        <p>Dark Web como mercado negro e centro de colaboração.</p>
+                        <h4>Ecossistema da Dark Web:</h4>
+                        <p>Marketplaces/fóruns para dados roubados, exploits, malware, acesso a redes.</p>
+                        <h4>Cybercrime-as-a-Service (CaaS):</h4>
+                        <p>Modelo SaaS para crimes. Oferta de kits de phishing, botnets, RaaS, lavagem de dinheiro. Uso crescente de IA (FraudGPT, BlackmailerV3).</p>
+                        <h4>Aumento de Credenciais Roubadas:</h4>
+                        <p>42% de aumento em 2024. 500% de aumento em logs de infostealers (1.7 mil milhões de credenciais).</p>
+                        <h4>Ransomware-as-a-Service (RaaS):</h4>
+                        <p>Ecossistema ativo.</p>
+                        <h4>Vulnerabilidades e Exploits Discutidos:</h4>
+                        <p>Muitas com exploits públicos logo após divulgação ou exploradas como zero-days.</p>
+                        <p>Industrialização do cibercrime baixa barreiras de entrada. Defesa proativa e inteligência de ameaças são cruciais.</p>
+                    </div>
+                    
+                    <button class="collapsible-trigger bg-slate-200 text-slate-700 py-2 px-4 rounded-md hover:bg-slate-300 w-full text-left mb-2 font-semibold">Honeypots: Detectando e Analisando Atividades Maliciosas (Clique para expandir/recolher)</button>
+                    <div class="collapsible-content p-4 border border-slate-300 rounded-md mb-4">
+                        <p>Sistemas/redes intencionalmente vulneráveis para atrair e registar atacantes, recolhendo inteligência sobre TTPs.</p>
+                        <h4>Tipos de Honeypots:</h4>
+                        <ul>
+                            <li><strong>Produção:</strong> Comuns em empresas, recolhem info sobre ataques reais na rede.</li>
+                            <li><strong>Pesquisa:</strong> Mais complexos, recolhem detalhes sobre métodos de adversários.</li>
+                            <li><strong>Baixa Interação:</strong> Poucos recursos, info básica, fáceis de configurar.</li>
+                            <li><strong>Alta Interação:</strong> Simulam sistemas reais, engajam por mais tempo, info de maior qualidade. Requerem monitorização e contenção (honeywall).</li>
+                        </ul>
+                        <h4>Avanços em Honeypots:</h4>
+                        <p>Incorporação de Machine Learning, baseados na nuvem, adaptativos (alteram comportamento com base no atacante, usam reinforcement learning).</p>
+                        <h4>Aplicações:</h4>
+                        <p>Inteligência de ameaças, análise de malware, segurança industrial (ICS), IoT, redes wireless, educação em cibersegurança.</p>
+                    </div>
+
+                    <h3 class="mt-6">Tabela: Principais Ameaças na Dark Web (2025) e Estratégias de Mitigação</h3>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Tipo de Ameaça</th>
+                                    <th>Descrição/Exemplos</th>
+                                    <th>Vetores Comuns</th>
+                                    <th>Impacto Potencial</th>
+                                    <th>Estratégias de Mitigação Chave</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>Infostealers</strong></td><td>Rouba credenciais, PII. Ex: TeleGrab, Agent Tesla, Lumma Stealer.</td><td>Phishing, Malvertisement, Malspam, Dropped.</td><td>Roubo de identidade, fraude, acesso não autorizado.</td><td>SO seguro (Tails, Whonix), antivírus, evitar downloads/links suspeitos, 2FA, monitorização Dark Web.</td></tr>
+                                <tr><td><strong>RATs</strong></td><td>Controlo remoto. Ex: Agent Tesla, VenomRAT.</td><td>Phishing, Malvertisement, Dropped.</td><td>Controlo total, espionagem, roubo de dados.</td><td>Firewall, antivírus, não executar ficheiros não confiáveis, software atualizado.</td></tr>
+                                <tr><td><strong>Ransomware</strong></td><td>Criptografa ficheiros, exige resgate. Ex: RansomHub, LockBit 3.0.</td><td>Phishing, exploits, RDP comprometido.</td><td>Perda de dados, interrupção, extorsão.</td><td>Backups offline, patches, segmentação de rede, treino anti-phishing, EDR.</td></tr>
+                                <tr><td><strong>Exploits Zero-Day</strong></td><td>Vulnerabilidades desconhecidas/não corrigidas. Foco em VPNs, firewalls.</td><td>Ataques direcionados, CSVs, estatais.</td><td>Compromisso total, espionagem.</td><td>Mitigação rápida pós-divulgação (patches), defesa em profundidade.</td></tr>
+                                <tr><td><strong>Phishing/Eng. Social</strong></td><td>Enganar para revelar info/executar malware. IA usada.</td><td>Emails, mensagens Dark Web, sites falsos.</td><td>Roubo de contas/fundos, infeção.</td><td>Ceticismo, verificar URLs.onion, não clicar, emails/personas descartáveis, 2FA.</td></tr>
+                                <tr><td><strong>Deanonimização (Fingerprinting)</strong></td><td>Identificação por características navegador/sistema.</td><td>Scripts em websites, APIs (Canvas, WebGL).</td><td>Perda de anonimato, rastreamento.</td><td>Tor Browser (segurança alta), Tails/Whonix, evitar mods navegador, desabilitar scripts.</td></tr>
+                                <tr><td><strong>Riscos de CaaS</strong></td><td>Acesso facilitado a ferramentas de hacking, malware.</td><td>Marketplaces/fóruns Dark Web.</td><td>Aumento frequência/sofisticação de ataques.</td><td>Monitorização Dark Web, inteligência de ameaças, postura proativa.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="gemini-input-section">
+                        <h3 class="text-xl font-semibold text-teal-700">✨ Assistente de Análise de Ameaças</h3>
+                        <p class="text-sm text-gray-600 mb-2">Descreva um cenário de ameaça ou uma preocupação de segurança que você tenha. O assistente usará a IA para fornecer uma análise, categorização e sugestões de mitigação.</p>
+                        <textarea id="threatInput" class="w-full p-2 border border-gray-300 rounded-md focus:ring-teal-500 focus:border-teal-500" rows="4" placeholder="Ex: Recebi um email suspeito com um link para um site .onion desconhecido. O que devo fazer?"></textarea>
+                        <button id="analyzeThreatButton" class="mt-2 bg-teal-600 hover:bg-teal-700 text-white font-semibold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50">
+                            Analisar Ameaça com IA
+                        </button>
+                        <div id="threatAnalysisLoading" class="loading-spinner" style="display: none;"></div>
+                        <div id="threatAnalysisOutput" class="gemini-output" style="display: none;"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="fortaleza" class="tab-content">
+                <div class="card">
+                    <h2><span class="icon">🏰</span>Seção 5: Fortalecendo a Fortaleza Digital: Segurança de Sistema e Física</h2>
+                    <p class="intro-paragraph">A segurança vai além do software de anonimato, abrangendo o sistema operacional, hardware e ambiente físico. Negligenciar estas camadas compromete outras precauções.</p>
+
+                    <button class="collapsible-trigger bg-slate-200 text-slate-700 py-2 px-4 rounded-md hover:bg-slate-300 w-full text-left mb-2 font-semibold">Criptografia de Disco Completo (FDE) (Clique para expandir/recolher)</button>
+                    <div class="collapsible-content p-4 border border-slate-300 rounded-md mb-4">
+                        <p>Protege todos os dados em repouso. Essencial contra acesso físico.</p>
+                        <h4>Soluções Comuns:</h4>
+                        <ul>
+                            <li><strong>VeraCrypt:</strong> Código aberto, multiplataforma. Volumes criptografados (ficheiros, partições). Volumes ocultos para negação plausível.</li>
+                            <li><strong>LUKS (Linux Unified Key Setup):</strong> Padrão Linux. Tails/Whonix beneficiam.</li>
+                            <li><strong>BitLocker (Windows) e FileVault (macOS):</strong> Nativas.</li>
+                        </ul>
+                        <h4>Melhores Práticas para FDE:</h4>
+                        <ul>
+                            <li>Senhas de desbloqueio fortes, longas, únicas.</li>
+                            <li>Para LUKS, considerar YubiKeys (FIDO2) para desbloqueio.</li>
+                            <li>Chaves de recuperação seguras e separadas.</li>
+                            <li>Algoritmo AES-256.</li>
+                        </ul>
+                    </div>
+
+                    <button class="collapsible-trigger bg-slate-200 text-slate-700 py-2 px-4 rounded-md hover:bg-slate-300 w-full text-left mb-2 font-semibold">Proteção de Firmware: Senhas de BIOS/UEFI e Secure Boot (Clique para expandir/recolher)</button>
+                    <div class="collapsible-content p-4 border border-slate-300 rounded-md mb-4">
+                        <p>Firmware é o primeiro software a executar. Comprometê-lo dá controlo total.</p>
+                        <h4>Senhas de BIOS/UEFI:</h4>
+                        <ul>
+                            <li><strong>Senha de Administrador (Supervisor):</strong> Restringe acesso a configurações UEFI.</li>
+                            <li><strong>Senha de Utilizador:</strong> Permite arranque, impede alterações UEFI.</li>
+                            <li>Importância: Previnem alterações na ordem de arranque, desativação de Secure Boot.</li>
+                        </ul>
+                        <h4>Secure Boot:</h4>
+                        <p>Garante que apenas software confiável (assinado) é carregado. Baseado em PKI (Platform Key, Key Exchange Key, Signature Database DB/DBX). Protege contra bootkits, rootkits. Manter habilitado e firmware UEFI atualizado. Cuidado com vulnerabilidades (ex: CVE-2024-7344).</p>
+                        <h4>Configuração da Ordem de Arranque (Boot Order):</h4>
+                        <p>Priorizar HDD interno. Desabilitar arranque de mídias externas não usadas e shells UEFI.</p>
+                    </div>
+
+                    <button class="collapsible-trigger bg-slate-200 text-slate-700 py-2 px-4 rounded-md hover:bg-slate-300 w-full text-left mb-2 font-semibold">Minimizando a Superfície de Ataque Físico e Lógico (Clique para expandir/recolher)</button>
+                    <div class="collapsible-content p-4 border border-slate-300 rounded-md mb-4">
+                        <h4>Desabilitar Interfaces Wireless Não Essenciais (Wi-Fi, Bluetooth):</h4>
+                        <p>Vetores comuns de ataque. Desativação lógica (software) ou física (hardware, mais seguro). Bluetooth: modo oculto, desligar quando não usado.</p>
+                        <h4>Desabilitar Portas Não Utilizadas:</h4>
+                        <p>USB, SATA, eSATA, PCIe. Previne ligação de dispositivos maliciosos.</p>
+                    </div>
+                    
+                    <button class="collapsible-trigger bg-slate-200 text-slate-700 py-2 px-4 rounded-md hover:bg-slate-300 w-full text-left mb-2 font-semibold">Integridade do Sistema em Ambientes Seguros (Tails/Whonix) (Clique para expandir/recolher)</button>
+                    <div class="collapsible-content p-4 border border-slate-300 rounded-md mb-4">
+                        <h4>Verificação de Imagens do SO:</h4>
+                        <p>Verificar autenticidade/integridade de ISOs/IMGs (PGP, hashes).</p>
+                        <h4>Rootkit Checkers (rkhunter, chkrootkit):</h4>
+                        <p>Verificam rootkits conhecidos, alterações suspeitas. Uso em Tails complicado pela amnésia. Em Whonix, `sudo rkhunter --update` e `sudo rkhunter --propupd` após updates. Limitações: dependem de assinaturas, não detetam ameaças novas, falsos positivos.</p>
+                        <h4>HIDS (Tripwire, AIDE):</h4>
+                        <p>Monitorizam alterações em ficheiros críticos. Complexo no Tails. Em Whonix, gestão cuidadosa da linha de base.</p>
+                        <h4>Lynis:</h4>
+                        <p>Auditoria de segurança, sugere hardening. Útil para Whonix-Workstation.</p>
+                        <h4>Análise de Tráfego na Whonix-Gateway (Wireshark/tcpdump):</h4>
+                        <p>Whonix documenta uso de `tshark`/`scapy` para "leak tests", verificando se apenas tráfego Tor sai.</p>
+                    </div>
+
+                    <button class="collapsible-trigger bg-slate-200 text-slate-700 py-2 px-4 rounded-md hover:bg-slate-300 w-full text-left mb-2 font-semibold">Sandboxing de Aplicações (Whonix/Tails) (Clique para expandir/recolher)</button>
+                    <div class="collapsible-content p-4 border border-slate-300 rounded-md mb-4">
+                        <p>Isola aplicações para conter danos se comprometidas.</p>
+                        <h4>Firejail:</h4>
+                        <p>SUID, usa namespaces Linux e seccomp-bpf. Uso em Whonix com cautela (risco de fingerprinting, vulnerabilidades no Firejail). Em Tails, pode ser redundante (AppArmor já usado).</p>
+                        <h4>AppArmor/SELinux:</h4>
+                        <p>MACs no kernel Linux. AppArmor (Debian/Tails/Whonix) mais fácil. Whonix recomenda perfis AppArmor. Tails usa extensivamente.</p>
+                        <h4>Bubblewrap:</h4>
+                        <p>Baixo nível, base para sandboxes (Flatpak). Não para uso final direto.</p>
+                        <p>Prioridade: manter SO base (Tails/Whonix) e apps atualizados, confiar nas suas arquiteturas de segurança.</p>
+                    </div>
+
+                    <button class="collapsible-trigger bg-slate-200 text-slate-700 py-2 px-4 rounded-md hover:bg-slate-300 w-full text-left mb-2 font-semibold">Considerações Extremas de OPSEC: Gaiolas de Faraday (Clique para expandir/recolher)</button>
+                    <div class="collapsible-content p-4 border border-slate-300 rounded-md mb-4">
+                        <p>Para vigilância eletrónica sofisticada ou proteção EMP.</p>
+                        <h4>Funcionamento:</h4>
+                        <p>Invólucro condutor (cobre, alumínio) bloqueia campos eletromagnéticos (EMI/RFI - telemóvel, Wi-Fi, Bluetooth, GPS), protege contra EMPs.</p>
+                        <h4>Eficácia:</h4>
+                        <p>Depende do material, espessura, frequência, ausência de aberturas. Aterramento pode melhorar.</p>
+                        <h4>Aplicações:</h4>
+                        <p>Forense digital (isolar dispositivos), testes eletrónicos, proteção EMP.</p>
+                        <h4>O que Armazenar:</h4>
+                        <p>Comunicação de emergência, navegação, energia portátil, médicos essenciais, backups.</p>
+                        <h4>Construção DIY:</h4>
+                        <p>Contentores metálicos, revestimento isolante, selar aberturas com fita condutora. Inspeção regular.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="ecossistema" class="tab-content">
+                <div class="card">
+                    <h2><span class="icon">🌍</span>Seção: Ecossistema da Dark Web: Fóruns, Emails e Diretórios</h2>
+                    <p class="intro-paragraph">Esta seção explora alguns dos tipos de recursos comuns encontrados na Dark Web, como fóruns de discussão, serviços de email anônimos e diretórios de links. É crucial abordar este tópico com extrema cautela, pois muitos destes recursos podem estar associados a atividades ilegais e representam riscos significativos de segurança.</p>
+                    
+                    <div class="warning-box">
+                        <p><strong>Atenção:</strong> A informação a seguir é fornecida apenas para fins educacionais e de consciencialização sobre segurança. Acessar ou interagir com conteúdo na Dark Web pode expô-lo a material ilegal, perigoso e perturbador. Muitos links podem estar desatualizados, levar a golpes (scams) ou a sites contendo malware. Nunca acesse a Dark Web sem as devidas precauções de segurança (Tor Browser, VPN se aplicável, SO seguro como Tails ou Whonix) e uma compreensão clara dos riscos envolvidos. Não endossamos nem encorajamos o acesso a qualquer conteúdo ilegal.</p>
+                    </div>
+
+                    <p>A Deep Web, e mais especificamente a Dark Web, inclui uma variedade de plataformas que servem a diferentes propósitos, desde a discussão anônima até serviços que visam proteger a privacidade do utilizador. No entanto, a natureza não regulamentada e anônima também atrai atividades ilícitas.</p>
+                    <p>Fontes como <a href="https://guides.stlcc.edu/deepweb" target="_blank" rel="noopener noreferrer" class="content-link">LibGuides at St. Louis Community College</a> explicam que a Deep Web contém muitos recursos legítimos, como bases de dados académicas e bibliotecas digitais, mas a Dark Web é onde os riscos se concentram mais devido ao anonimato que proporciona.</p>
+
+
+                    <button class="collapsible-trigger bg-slate-200 text-slate-700 py-2 px-4 rounded-md hover:bg-slate-300 w-full text-left mb-2 font-semibold">Fóruns da Deep/Dark Web (Clique para expandir/recolher)</button>
+                    <div class="collapsible-content p-4 border border-slate-300 rounded-md mb-4">
+                        <p>Fóruns na Dark Web são plataformas onde os utilizadores podem discutir uma vasta gama de tópicos anonimamente. Muitos focam-se em hacking, segurança cibernética, privacidade, criptomoedas, mas também podem albergar discussões sobre atividades ilegais, venda de dados roubados, e outros conteúdos controversos. É essencial ter em mente que a participação ou mesmo a visualização de certos fóruns pode ter implicações legais e de segurança.</p>
+                        <p>Uma análise de fontes como <a href="https://cyble.com/knowledge-hub/top-10-dark-web-forums/" target="_blank" rel="noopener noreferrer" class="content-link">Cyble - Top 10 Dark Web Forums of 2025</a> e <a href="https://socradar.io/top-10-deep-web-and-dark-web-forums/" target="_blank" rel="noopener noreferrer" class="content-link">SOCRadar - Top 10 Deep Web and Dark Web Forums</a> identifica vários fóruns populares, detalhados abaixo. (Nota: A inclusão nesta lista é para fins informativos sobre o que é reportado existir e não constitui um endosso ou recomendação de acesso).</p>
+                        <div class="table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Rank</th>
+                                        <th>Nome do Fórum</th>
+                                        <th>Ano de Estabelecimento</th>
+                                        <th>Áreas de Foco</th>
+                                        <th>Detalhes Notáveis</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>XSS</td>
+                                        <td>2013</td>
+                                        <td>Hacking, acesso corporativo, vazamentos de dados</td>
+                                        <td>Rebrandizado em 2018 após prisão de administrador, serviços de ransomware.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>Nulled.to</td>
+                                        <td>2015</td>
+                                        <td>Dados vazados, ferramentas de hacking, fraudes</td>
+                                        <td>Sofreu violação de dados em 2016, expondo informações de usuários.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>BreachForums</td>
+                                        <td>2022</td>
+                                        <td>Vazamentos de dados, exploits, cibercrime</td>
+                                        <td>Sucessor do RaidForums, fundador preso em 2023.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>Dread</td>
+                                        <td>2018</td>
+                                        <td>Vazamentos, drogas ilegais, privacidade, cibersegurança</td>
+                                        <td>Maior fórum, com múltiplas sub-comunidades.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td>CryptBB</td>
+                                        <td>2020</td>
+                                        <td>Hacking avançado, carding, técnicas avançadas</td>
+                                        <td>Usa criptografia AES 256 CTR e RSA768-2048.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>6</td>
+                                        <td>LeakBase</td>
+                                        <td>2023</td>
+                                        <td>Vazamentos de dados, compra/venda de dados sensíveis</td>
+                                        <td>Ganhou tração após fechamento do BreachForums.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>7</td>
+                                        <td>FreeHacks</td>
+                                        <td>2014</td>
+                                        <td>Carding, ataques DDoS, ferramentas de hacking</td>
+                                        <td>Baseado na Rússia, membership seletivo, comunidade avançada.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>8</td>
+                                        <td>Exploit.in</td>
+                                        <td>2005</td>
+                                        <td>Exploits, malware, dados roubados</td>
+                                        <td>Opera na dark e surface web, facilita acesso não autorizado.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>9</td>
+                                        <td>Cracked.to</td>
+                                        <td>2013</td>
+                                        <td>Hacking, cracking, vazamentos, programação</td>
+                                        <td>Mais de 3 milhões de membros, 17 milhões de posts, mix de tópicos.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>10</td>
+                                        <td>Altenen</td>
+                                        <td>Não especificado</td>
+                                        <td>Fraude com cartões, crimes financeiros</td>
+                                        <td>Compartilha técnicas e ferramentas, atrai seguidores leais.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p>Estes fóruns são frequentemente monitorizados por agências de aplicação da lei e investigadores de segurança. A simples visita pode não ser ilegal na maioria das jurisdições, mas o download ou partilha de conteúdo ilegal certamente é.</p>
+                    </div>
+
+                    <button class="collapsible-trigger bg-slate-200 text-slate-700 py-2 px-4 rounded-md hover:bg-slate-300 w-full text-left mb-2 font-semibold">Serviços de Email Anônimos na Deep/Dark Web (Clique para expandir/recolher)</button>
+                    <div class="collapsible-content p-4 border border-slate-300 rounded-md mb-4">
+                        <p>A procura por comunicação por email mais anônima leva alguns utilizadores a serviços hospedados na Dark Web ou acessíveis via Tor. Estes serviços geralmente prometem não registar IPs, não exigir informações pessoais para registo e, por vezes, oferecer criptografia. No entanto, a confiança e a segurança real podem variar enormemente.</p>
+                        <p>Uma lista de provedores, como a mencionada em <a href="https://freedomhacker.net/list-of-secure-dark-web-email-providers-in-2016-4946/" target="_blank" rel="noopener noreferrer" class="content-link">Freedom Hacker - List of Secure Dark Web Email Providers</a> (nota: o artigo é de 2016, a disponibilidade e segurança podem ter mudado), inclui exemplos como:</p>
+                        <div class="table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Rank</th>
+                                        <th>Nome do Provedor</th>
+                                        <th>URL .onion (Exemplo/Referência)</th>
+                                        <th>Portal Clearweb</th>
+                                        <th>Domínio de E-mail</th>
+                                        <th>Armazenamento Gratuito</th>
+                                        <th>Notas</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>DanWin1210.de</td>
+                                        <td><code>danielas3rtn54uwmofdo3x2bsdifr47huasnmbgqzfrec5ubupvtpid.onion</code></td>
+                                        <td>Sim</td>
+                                        <td>@danwin1210.de</td>
+                                        <td>50MB</td>
+                                        <td>Gerenciado por Daniel Winzen, Alemanha; sem verificação adicional.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>SecTor.City</td>
+                                        <td><code>sector2nyjrxphgrj3cvnueanomz4trvgyxofvu3cexltoxuegtlmzid.onion</code></td>
+                                        <td>Sim</td>
+                                        <td>@sector.city</td>
+                                        <td>10MB</td>
+                                        <td>E-mails apenas via Tor, problemas de confiabilidade reportados, sem POP3/IMAP.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>Mail2Tor</td>
+                                        <td><code>mail2torjgmxgexntbrmhvgluavhj7ouul5yar6ylbvjkxwqf6ixkwyd.onion</code></td>
+                                        <td>Sim (links para .onion)</td>
+                                        <td>@mail2tor.com</td>
+                                        <td>25MB</td>
+                                        <td>Apenas via Tor, problemas de confiabilidade reportados, site minimalista.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>Cock.li</td>
+                                        <td><code>rurcblzhmdk22kttfkel2zduhyu3r6to7knyc7wiorzrx5gw4c3lftad.onion</code></td>
+                                        <td>-</td>
+                                        <td>Vários domínios</td>
+                                        <td>Variável</td>
+                                        <td>Conhecido por uma postura mais anárquica, oferece múltiplos domínios. Gerenciado por Vincent Canfield, publica relatório de transparência.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td>ProtonMail</td>
+                                        <td><code>protonmailrmez3lotccipshtkleegetolb73fuirgj7r4o4vfu7ozyd.onion</code></td>
+                                        <td>Sim (protonmail.com/tor)</td>
+                                        <td>@protonmail.com, @pm.me</td>
+                                        <td>500MB (plano gratuito)</td>
+                                        <td>Serviço conhecido da Surface Web com presença .onion. Criptografia ponta a ponta, zero-knowledge. Sediado na Suíça. Pode registar IPs em certas circunstâncias legais.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p>Fontes como <a href="https://www.avast.com/c-dark-web" target="_blank" rel="noopener noreferrer" class="content-link">Avast - What Is the Dark Web?</a> reforçam a necessidade de usar ferramentas de segurança ao interagir com tais serviços. É importante lembrar que "anônimo" não significa "totalmente seguro" ou "à prova de falhas". A confiança no administrador do serviço é um fator chave, e muitos destes serviços são operados por indivíduos ou pequenos grupos com pouca supervisão.</p>
+                    </div>
+
+                    <button class="collapsible-trigger bg-slate-200 text-slate-700 py-2 px-4 rounded-md hover:bg-slate-300 w-full text-left mb-2 font-semibold">Diretórios de Links (.onion) (Clique para expandir/recolher)</button>
+                    <div class="collapsible-content p-4 border border-slate-300 rounded-md mb-4">
+                        <p>Devido à natureza não indexada dos sites .onion, os diretórios de links desempenham um papel importante para ajudar os utilizadores a encontrar recursos na Dark Web. No entanto, estes diretórios podem ser um campo minado de links desatualizados, perigosos ou que levam a conteúdo ilegal.</p>
+                        <p>Alguns diretórios frequentemente mencionados em guias da surface web (como os de <a href="https://www.avast.com/c-dark-web-websites" target="_blank" rel="noopener noreferrer" class="content-link">Avast - Dark Web Websites</a> e <a href="https://www.expressvpn.com/blog/best-onion-sites-on-dark-web/" target="_blank" rel="noopener noreferrer" class="content-link">ExpressVPN - Best Onion and Tor Sites</a>) incluem:</p>
+                        <ul class="list-disc ml-5 space-y-1">
+                            <li><strong>The Hidden Wiki:</strong> Um dos mais antigos e conhecidos, embora muitas das suas versões contenham uma grande percentagem de links desatualizados ou para sites de reputação duvidosa. Existem vários "mirrors" e versões, e a sua qualidade varia imensamente. Um exemplo de link para uma versão na surface web que aponta para recursos .onion é <code>thehiddenwiki.org</code>.</li>
+                            <li><strong>Tor Links:</strong> Apresentado como um diretório organizado em categorias, como serviços de criptomoedas e redes sociais. Um exemplo de URL .onion (meramente ilustrativo, não verificado) seria algo como <code>torlinksge6enmcyyuxjpjkoouw4oorgdgeo7ftnq3zodj7g2zxi3kyd.onion</code>.</li>
+                            <li><strong>Outros Diretórios e Motores de Busca .onion:</strong> Existem outros diretórios e até mesmo motores de busca específicos para a rede Tor (como Ahmia, Haystak - embora a sua eficácia e segurança possam variar).</li>
+                        </ul>
+                        <p>Ao usar diretórios, é crucial ter um ceticismo saudável. Muitos links podem ser armadilhas (honeypots), sites de phishing, ou levar a conteúdo que o utilizador não deseja ver. Artigos como o de <a href="https://surfshark.com/blog/tor-websites" target="_blank" rel="noopener noreferrer" class="content-link">Surfshark - Tor & dark web links to explore safely</a> recomendam sempre o uso de VPN (além do Tor, numa configuração Tor-sobre-VPN) e antivírus ao explorar estes diretórios.</p>
+                        <p>Serviços como **Impreza Hosting** (<code>imprezahost.com</code> na surface web) são mencionados como provedores de hospedagem que suportam sites .onion, o que indiretamente contribui para a existência e armazenamento de tais links, mas não são diretórios em si.</p>
+                    </div>
+                    <div class="warning-box mt-6">
+                        <p><strong>Considerações Finais sobre o Ecossistema:</strong></p>
+                        <ul class="list-disc ml-5 space-y-1">
+                            <li>A informação sobre estes recursos é frequentemente baseada em análises de fontes da surface web, como guias académicos e blogs de segurança.</li>
+                            <li>A Dark Web é um ambiente extremamente dinâmico. Sites e serviços podem aparecer e desaparecer rapidamente, e os URLs .onion mudam frequentemente.</li>
+                            <li>A inclusão de qualquer link ou nome de serviço neste guia não constitui um endosso. O objetivo é educar sobre o que é reportado existir, para que os utilizadores compreendam melhor o ambiente e os seus riscos.</li>
+                            <li>Reitera-se: a exploração da Dark Web acarreta riscos significativos. Proceda sempre com máxima cautela, utilize todas as ferramentas de segurança recomendadas e esteja ciente das implicações legais e de segurança das suas ações.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="conclusoes" class="tab-content">
+                <div class="card">
+                    <h2><span class="icon">🏁</span>Seção 6: Conclusões e Recomendações Finais</h2>
+                    <p class="intro-paragraph">Navegar na Deep e Dark Web exige preparação e vigilância superiores. Este guia validou conceitos e atualizou métodos para segurança avançada. As principais conclusões e recomendações são:</p>
+                    <ol class="list-decimal space-y-2">
+                        <li><strong>Compreensão é a Base da Segurança:</strong> Distinguir Deep Web (maioritariamente benigna, não indexada) de Dark Web (oculta, software especial, usos mistos) é fundamental.</li>
+                        <li><strong>Anonimato é Multifacetado e Dependente da Ferramenta:</strong> Escolher rede (Tor, I2P, Freenet) e SO (Tails, Whonix, Qubes OS + Whonix) conforme objetivos e modelo de ameaça.</li>
+                        <li><strong>OPSEC é uma Disciplina Contínua:</strong> Hardening, prevenção de vazamentos, gestão meticulosa de personas (estilometria, isolamento), transações financeiras anónimas (Monero, OPSEC de carteiras).</li>
+                        <li><strong>Ameaças São Reais, Dinâmicas e Industrializadas:</strong> Malware (infostealers, RATs, ransomware), zero-days, CaaS, fingerprinting. Atores estatais e APTs têm capacidades significativas.</li>
+                        <li><strong>Defesa em Profundidade é Imperativa:</strong> Segurança em camadas (hardware/firmware, SO, rede, navegador, OPSEC). Ferramentas de integridade/sandboxing com discernimento.</li>
+                        <li><strong>Não Existe Anonimato Absoluto ou Segurança Infalível:</strong> Objetivo é mitigar riscos, compreender limitações, adaptar defesas. Vigilância e educação contínuas são vitais.</li>
+                    </ol>
+                    <p class="mt-4">A responsabilidade recai sobre o utilizador para se educar, preparar e manter a disciplina necessária nestes ambientes complexos.</p>
+                    
+                    <h3 class="mt-6">✔️ Checklist Fantasma — Revisão Rápida</h3>
+                    <ul class="list-disc space-y-1 mt-2">
+                        <li><input type="checkbox" id="chk1" class="mr-2"><label for="chk1">VPN (se aplicável) + Tor + Bridges configurados?</label></li>
+                        <li><input type="checkbox" id="chk2" class="mr-2"><label for="chk2">Sistema seguro (Tails, Qubes ou Whonix) em uso?</label></li>
+                        <li><input type="checkbox" id="chk3" class="mr-2"><label for="chk3">Firewall + Kill Switch (se VPN) ativos?</label></li>
+                        <li><input type="checkbox" id="chk4" class="mr-2"><label for="chk4">Testes de DNS/IP Leak realizados e OK?</label></li>
+                        <li><input type="checkbox" id="chk5" class="mr-2"><label for="chk5">Persona digital isolada e consistente?</label></li>
+                        <li><input type="checkbox" id="chk6" class="mr-2"><label for="chk6">Ferramentas de monitoramento (se aplicável ao seu SO/setup) ativas?</label></li>
+                        <li><input type="checkbox" id="chk7" class="mr-2"><label for="chk7">Criptografia full-disk + volumes ocultos (se aplicável) em uso?</label></li>
+                    </ul>
+                     <p class="mt-4 text-sm text-gray-600"><em>Lembre-se: Na deep/dark web, sua OPSEC é seu seguro de vida. Falhou? Está comprometido.</em></p>
+
+                    <div class="gemini-input-section">
+                        <h3 class="text-xl font-semibold text-teal-700">✨ Gerador de Checklist OPSEC Personalizado</h3>
+                        <p class="text-sm text-gray-600 mb-2">Selecione um perfil de utilizador para gerar uma checklist de OPSEC personalizada com o auxílio da IA.</p>
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <button class="opsec-profile-button bg-sky-500 hover:bg-sky-600 text-white font-semibold py-2 px-3 rounded-md text-sm" data-profile="Jornalista Investigativo em ambiente hostil">Jornalista Investigativo</button>
+                            <button class="opsec-profile-button bg-sky-500 hover:bg-sky-600 text-white font-semibold py-2 px-3 rounded-md text-sm" data-profile="Entusiasta de Criptomoedas focado em privacidade">Entusiasta de Criptomoedas</button>
+                            <button class="opsec-profile-button bg-sky-500 hover:bg-sky-600 text-white font-semibold py-2 px-3 rounded-md text-sm" data-profile="Ativista de Direitos Humanos comunicando-se com fontes sensíveis">Ativista de Direitos Humanos</button>
+                            <button class="opsec-profile-button bg-sky-500 hover:bg-sky-600 text-white font-semibold py-2 px-3 rounded-md text-sm" data-profile="Utilizador comum buscando anonimato geral na Dark Web">Utilizador Anônimo Geral</button>
+                        </div>
+                        <div id="opsecChecklistLoading" class="loading-spinner" style="display: none;"></div>
+                        <div id="opsecChecklistOutput" class="gemini-output" style="display: none;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="referencias" class="tab-content">
+                <div class="card">
+                    <h2><span class="icon">📚</span>Seção 7: Referências Citadas (Geral)</h2>
+                    <p class="intro-paragraph">Esta seção lista as fontes consultadas para a elaboração geral deste guia interativo. Referências específicas de cada seção podem ser encontradas no corpo do texto.</p>
+                    <ol class="list-decimal space-y-2 reference-list">
+                        <li><a href="https://www.bitsight.com/learn/dark-web-vs-deep-web-vs-gray-web#:~:text=The%20Deep%20Web%2C%20which%20includes,is%20completely%20distinct%20from%20it" target="_blank" rel="noopener noreferrer">Bitsight.com - The Deep Web vs. Dark Web: What's the Difference?</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.bitsight.com/learn/dark-web-vs-deep-web-vs-gray-web" target="_blank" rel="noopener noreferrer">Bitsight.com - The Deep Web vs. Dark Web: What's the Difference? (2)</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://en.wikipedia.org/wiki/Tor_(network)" target="_blank" rel="noopener noreferrer">Wikipedia - Tor (network)</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://blog.torproject.org/" target="_blank" rel="noopener noreferrer">The Tor Project - Tor Blog</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://forum.torproject.org/t/feedback-from-china-april-2025-increased-gfw-censorship-obfs4-meek-snowflake-unusable-webtunnel-connects-but-is-quickly-blocked/18233" target="_blank" rel="noopener noreferrer">Tor Project Forum - Feedback from China [April 2025]</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://blog.torproject.org/call-for-webtunnel-bridges/" target="_blank" rel="noopener noreferrer">The Tor Project - Tor in Russia: A call for more WebTunnel bridges</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.expressvpn.com/blog/what-is-i2p/" target="_blank" rel="noopener noreferrer">ExpressVPN - What Is I2P & How Does It Work?</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://navigating-the-darkweb.readthedocs.io/en/latest/chapter3_i2p.html" target="_blank" rel="noopener noreferrer">Navigating the Dark Web - Chapter 3: I2P</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://thecyberexpress.com/what-is-freenet/" target="_blank" rel="noopener noreferrer">The Cyber Express - What is Freenet? How Safe Is It? 2024</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://freenet.org/faq/" target="_blank" rel="noopener noreferrer">Freenet - Frequently Asked Questions</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://thecyberexpress.com/what-is-tails/" target="_blank" rel="noopener noreferrer">The Cyber Express - What Is Tails OS: Everything You Need to Know in 2024!</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.stationx.net/secure-operating-systems/" target="_blank" rel="noopener noreferrer">StationX - Top 5 Secure Operating Systems for Privacy and Anonymity</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://linuxsecurity.com/news/privacy/tails-6-15-privacy-security" target="_blank" rel="noopener noreferrer">LinuxSecurity - Strengthening Privacy & Security with Tails 6.15</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.whonix.org/" target="_blank" rel="noopener noreferrer">Whonix - Superior Internet Privacy</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.whonix.org/wiki/Introduction" target="_blank" rel="noopener noreferrer">Whonix - Whonix Documentation Introduction</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.qubes-os.org/" target="_blank" rel="noopener noreferrer">Qubes OS - A reasonably secure operating system</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.qubes-os.org/faq/" target="_blank" rel="noopener noreferrer">Qubes OS - Frequently asked questions (FAQ)</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.whonix.org/wiki/Qubes/Install" target="_blank" rel="noopener noreferrer">Whonix - How-to: Install Qubes-Whonix</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.qubes-os.org/doc/installation-guide-4.1/" target="_blank" rel="noopener noreferrer">Qubes OS - Qubes 4.1 Installation guide</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.qubes-os.org/faq/#what-about-privacy-in-non-whonix-qubes" target="_blank" rel="noopener noreferrer">Qubes OS - FAQ: What about privacy in non-Whonix Qubes?</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.qubes-os.org/news/2025/05/15/qsb-107/" target="_blank" rel="noopener noreferrer">Qubes OS - QSB-107: Multiple CPU branch prediction vulnerabilities</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.qubes-os.org/security/qsb/" target="_blank" rel="noopener noreferrer">Qubes OS - Qubes security bulletins (QSBs)</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://blog.redseclabs.com/top-10-vpns-in-2025-for-security-privacy-in-depth-analysis/" target="_blank" rel="noopener noreferrer">REDSECLABS - Top 10 VPNs in 2025 for Security & Privacy</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://cyberinsider.com/vpn/best/no-logs-vpn/" target="_blank" rel="noopener noreferrer">CyberInsider - Best No Logs VPN for 2025</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://nordvpn.com/blog/does-a-vpn-protect-you-from-hackers/" target="_blank" rel="noopener noreferrer">NordVPN - Does a VPN protect you from hackers?</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.checkpoint.com/cyber-hub/network-security/what-is-vpn/5-biggest-vpn-security-risks/" target="_blank" rel="noopener noreferrer">Check Point Software - 5 Biggest VPN Security Risks</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://spyboy.blog/2025/02/25/the-hidden-dangers-of-free-vpns-why-free-often-comes-at-a-high-cost/" target="_blank" rel="noopener noreferrer">Spyboy Blog - The Hidden Dangers of Free VPNs</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.todyl.com/blog/disadvantages-using-vpns" target="_blank" rel="noopener noreferrer">Todyl - Five Disadvantages of Using VPNs</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.cisa.gov/topics/cyber-threats-and-advisories/nation-state-cyber-actors" target="_blank" rel="noopener noreferrer">CISA - Nation-State Cyber Actors</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://threatmon.io/miyako-an-emerging-threat-actor-with-advanced-capabilities/" target="_blank" rel="noopener noreferrer">ThreatMon - Miyako: An Emerging Threat Actor</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.anarsec.guide/posts/tails/" target="_blank" rel="noopener noreferrer">AnarSec - Tails for Anarchists</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://trainingcamp.com/articles/encryption-best-practices-2025-complete-guide-to-data-protection-standards-and-implementation/" target="_blank" rel="noopener noreferrer">Training Camp - Encryption Best Practices 2025</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.specialeurasia.com/2025/04/08/osint-deep-dark-web/" target="_blank" rel="noopener noreferrer">SpecialEurasia - OSINT: Practices for Deep/Dark Web Intelligence</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://arxiv.org/pdf/2502.01608" target="_blank" rel="noopener noreferrer">arXiv - arxiv.org (PDF)</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://arxiv.org/html/2502.14326v1" target="_blank" rel="noopener noreferrer">arXiv - Browser Fingerprint Detection and Anti-Tracking</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.protectstar.com/en/blog/browser-fingerprinting" target="_blank" rel="noopener noreferrer">Protectstar - What is Browser Fingerprinting?</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://ente.io/blog/best-browser-in-2024/" target="_blank" rel="noopener noreferrer">Ente - Best private browsers to use in 2024</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.bitsight.com/learn/digital-fingerprinting" target="_blank" rel="noopener noreferrer">Bitsight - Digital Fingerprinting in Cybersecurity</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.top10vpn.com/what-is-a-vpn/vpn-leaks/" target="_blank" rel="noopener noreferrer">Top10VPN - VPN Leaks Explained</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://blog.torguard.net/how-to-test-your-vpn-for-dns-leaks/" target="_blank" rel="noopener noreferrer">TorGuard Blog - How to Test Your VPN for DNS Leaks</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://aicybercheck.com/blog/7_most_secure_non_chromium_browsers_that_block_cross_site_tr.php" target="_blank" rel="noopener noreferrer">AICyberCheck - 7 Most Secure Non-Chromium Browsers</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://whos-zycher.github.io/opsec-guide/" target="_blank" rel="noopener noreferrer">Zycher - OPSEC Guide</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://threesigma.xyz/blog/opsec/crypto-opsec-guide-part-2-device-privacy-security" target="_blank" rel="noopener noreferrer">Three Sigma - Opsec for Everyday Users: Part 2</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.authentic8.com/blog/what-not-to-do-on-the-dark-web" target="_blank" rel="noopener noreferrer">Authentic8 - What not to do on the dark web</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.aura.com/learn/deep-web-vs-dark-web" target="_blank" rel="noopener noreferrer">Aura - Deep Web vs. Dark Web: What You Need To Know</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.channele2e.com/native/5-best-practices-for-opsec-fundamentals" target="_blank" rel="noopener noreferrer">ChannelE2E - 5 Best Practices for OPSEC Fundamentals</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.reddit.com/r/Qubes/comments/1kfia60/best_practice_for_multiple_personas_using_whonix/" target="_blank" rel="noopener noreferrer">Reddit - Best Practice for Multiple “personas” using Whonix?</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.reddit.com/r/opsec/comments/1j4s7hk/preferred_method_of_anonymity_and_why/" target="_blank" rel="noopener noreferrer">Reddit - Preferred method of Anonymity and why?</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.sentinelone.com/cybersecurity-101/threat-intelligence/what-is-the-dark-web/" target="_blank" rel="noopener noreferrer">SentinelOne - What is Dark Web?</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://synchronet.net/tor-email/" target="_blank" rel="noopener noreferrer">SynchroNet - Secure Tor Email Guide</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://cyberinsider.com/email/reviews/protonmail/" target="_blank" rel="noopener noreferrer">CyberInsider - Proton Mail Review: 2025 Test Results</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://travelsecurely.com/tutanota-review/" target="_blank" rel="noopener noreferrer">TravelSecurely - Tutanota Review 2025</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://cyberinsider.com/email/reviews/tuta-mail/" target="_blank" rel="noopener noreferrer">CyberInsider - Tuta Mail Review — 2025 Test Results</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://play.google.com/store/apps/details?id=org.onionmail.mail" target="_blank" rel="noopener noreferrer">Google Play - Onion Mail</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://tracxn.com/d/companies/onion-mail/__Af0dLHvVEpyE-lROzhAAnIk2f_VbJIuQdvo0JAejafs" target="_blank" rel="noopener noreferrer">Tracxn - Onion Mail - 2025 Company Profile</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.pcmag.com/reviews/session" target="_blank" rel="noopener noreferrer">PCMag - Session Review</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.yahoo.com/tech/best-private-messaging-apps-2024-140000599.html" target="_blank" rel="noopener noreferrer">Yahoo - The Best Private Messaging Apps for 2025</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://sourceforge.net/software/product/Cwtch/" target="_blank" rel="noopener noreferrer">SourceForge - Cwtch Reviews in 2025</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://news.ycombinator.com/item?id=43367012" target="_blank" rel="noopener noreferrer">Hacker News - Cwtch – Privacy Preserving Messaging</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.ricochetrefresh.net/" target="_blank" rel="noopener noreferrer">Ricochet Refresh - Ricochet Refresh</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://awesome-privacy.xyz/communication/p2p-messaging/ricochet-refresh" target="_blank" rel="noopener noreferrer">Awesome Privacy - Ricochet Refresh | P2P Messaging</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://troymedia.com/joint-venture/solana-vs-monero-xmr-speed-privacy-and-utility-in-2025/" target="_blank" rel="noopener noreferrer">Troy Media - Solana vs Monero (XMR)</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://arxiv.org/html/2505.02392v2" target="_blank" rel="noopener noreferrer">arXiv - Monero's Decentralized P2P Exchanges (v2)</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://arxiv.org/html/2505.02392v1" target="_blank" rel="noopener noreferrer">arXiv - Monero's Decentralized P2P Exchanges (v1)</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://cointelegraph.com/news/samourai-wallet-feds-hid-advice-crypto-mixer-didnt-need-license" target="_blank" rel="noopener noreferrer">Cointelegraph - Samourai Wallet says feds hid advice</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://marketguard.io/blog/crypto-mixers-and-the-travel-rule-regulatory-challenges-and-solutions" target="_blank" rel="noopener noreferrer">MarketGuard - Crypto Mixers and the Travel Rule</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.reddit.com/r/CryptoCurrency/comments/1km0zex/security_101_how_to_safely_store_your_crypto_in/" target="_blank" rel="noopener noreferrer">Reddit - Security 101: How to Safely Store Your Crypto</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://materialbitcoin.com/en/blog/best-crypto-physical-wallets/" target="_blank" rel="noopener noreferrer">Material Bitcoin - Best Crypto Physical Wallets 2025</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.youtube.com/watch?v=BQuBkWEg1OU" target="_blank" rel="noopener noreferrer">YouTube - Encrypt & Store Crypto Wallets with VeraCrypt</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://bbs.archlinux.org/viewtopic.php?id=298727" target="_blank" rel="noopener noreferrer">Arch Linux Forums - Is LUKS as secure as VeraCrypt on Windows?</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://github.com/iAnonymous3000/cryptocurrency-wallet-opsec" target="_blank" rel="noopener noreferrer">GitHub - Comprehensive Cryptocurrency Wallet OpSec Guide</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.cisecurity.org/insights/blog/top-10-malware-q1-2025" target="_blank" rel="noopener noreferrer">CIS Center for Internet Security - Top 10 Malware Q1 2025</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.ibm.com/thought-leadership/institute-business-value/en-us/report/2025-threat-intelligence-index" target="_blank" rel="noopener noreferrer">IBM - IBM X-Force 2025 Threat Intelligence Index</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.microsoft.com/en-us/security/blog/2025/05/12/marbled-dust-leverages-zero-day-in-output-messenger-for-regional-espionage/" target="_blank" rel="noopener noreferrer">Microsoft Security Blog - Marbled Dust leverages zero-day</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://industrialcyber.co/reports/fortinet-fortiguard-labs-2025-reports-cybercrime-as-a-service-boom-as-hackers-weaponize-ai-amid-industrialized-threat-surge/" target="_blank" rel="noopener noreferrer">Industrial Cyber - Fortinet FortiGuard Labs 2025 reports</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://cloud.google.com/blog/topics/threat-intelligence/2024-zero-day-trends" target="_blank" rel="noopener noreferrer">Google Cloud Blog - Hello 0-Days, My Old Friend</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.legitsecurity.com/aspm-knowledge-base/advanced-persistent-threat-examples" target="_blank" rel="noopener noreferrer">Legit Security - Advanced Persistent Threat (APT): Examples</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.paloaltonetworks.com/cyberpedia/what-is-advanced-persistent-threat-apt" target="_blank" rel="noopener noreferrer">Palo Alto Networks - What Is an Advanced Persistent Threat?</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://cyble.com/knowledge-hub/dark-web-monitoring-strategies-cisos-2025/" target="_blank" rel="noopener noreferrer">Cyble - Dark Web Monitoring: Key CISO Strategies For 2025 (1)</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.cyble.com/knowledge-hub/dark-web-monitoring-strategies-cisos-2025/" target="_blank" rel="noopener noreferrer">Cyble - Dark Web Monitoring: Key CISO Strategies For 2025 (2)</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.crowdstrike.com/en-us/cybersecurity-101/exposure-management/honeypots/" target="_blank" rel="noopener noreferrer">CrowdStrike - What is a Honeypot in Cybersecurity?</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.mdpi.com/2227-9709/12/1/14" target="_blank" rel="noopener noreferrer">MDPI - Advancing Cybersecurity with Honeypots</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://discussion.fedoraproject.org/t/securing-fedora-with-fido2-utrust-full-disk-luks-gui-login-and-sudo-authentication/154136" target="_blank" rel="noopener noreferrer">Fedora Discussion - Securing Fedora with FIDO2 (LUKS)</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.nsa.gov/portals/75/documents/what-we-do/cybersecurity/professional-resources/csi-uefi-lockdown.pdf" target="_blank" rel="noopener noreferrer">NSA - UEFI LOCKDOWN QUICK GUIDANCE (PDF)</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://trustedinstitute.com/concept/comptia-a-plus/bios-and-uefi/bios-uefi-password-protection/" target="_blank" rel="noopener noreferrer">TrustEd Institute - BIOS/UEFI password protection</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://blog.sonnes.cloud/secure-boot-what-it-is-and-how-to-update-secure-boot-keys/" target="_blank" rel="noopener noreferrer">Sonnes Blog - Secure Boot – What it is</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://support.microsoft.com/en-us/windows/windows-11-and-secure-boot-a8ff1202-c0d9-42f5-940f-843abef64fad" target="_blank" rel="noopener noreferrer">Microsoft Support - Windows 11 and Secure Boot</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://community.frame.work/t/uefi-security-boot-cve-2024-7344/63429" target="_blank" rel="noopener noreferrer">Framework Community - UEFI Security Boot CVE-2024-7344</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.youtube.com/watch?v=ILzuQfZ1q1o" target="_blank" rel="noopener noreferrer">YouTube - UEFI Bios Utility Change Boot Priority</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://docs.datadoghq.com/security/default_rules/def-000-bk3/" target="_blank" rel="noopener noreferrer">Datadog Docs - Deactivate Wireless Network Interfaces</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.fcc.gov/consumers/guides/how-protect-yourself-online" target="_blank" rel="noopener noreferrer">FCC - Wireless Connections and Bluetooth Security Tips</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.whonix.org/wiki/Verify_the_images_using_Windows" target="_blank" rel="noopener noreferrer">Whonix - Verify Whonix Virtual Machine Images in Windows</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.privacyguides.org/articles/2025/01/29/installing-and-using-tails/" target="_blank" rel="noopener noreferrer">Privacy Guides - Using Tails When Your World Doesn't Feel Safe</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.linuxquestions.org/questions/linux-security-4/rkhunter-and-chkrootkit-vs-tripwire-547858-print/" target="_blank" rel="noopener noreferrer">LinuxQuestions.org - rkhunter & chkrootkit vs tripwire</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.youtube.com/watch?v=1Gg2-DD6kyI" target="_blank" rel="noopener noreferrer">YouTube - Running Tails OS in a Virtual Machine</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://forum.zorin.com/t/how-to-run-chkrootkit-rkhunter-from-live-cd/1153" target="_blank" rel="noopener noreferrer">Zorin Forum - How to run chkrootkit & rkhunter from Live CD</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://forum.zorin.com/t/rootkit-hunter-and-chkrootkit/25564" target="_blank" rel="noopener noreferrer">Zorin Forum - Rootkit Hunter and ChkRootKit</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.reddit.com/r/linuxadmin/comments/1khpev8/is_anyone_using_lynisrkhunterchkrootkit_on/" target="_blank" rel="noopener noreferrer">Reddit - Is anyone using lynis/rkhunter/chkrootkit on regular basis?</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.whonix.org/wiki/Dev/Leak_Tests_Old" target="_blank" rel="noopener noreferrer">Whonix - Dev/Leak Tests Old</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://levelblue.com/blogs/security-essentials/network-traffic-analysis-using-wireshark" target="_blank" rel="noopener noreferrer">LevelBlue - Master Network Traffic Analysis with Wireshark</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://forum.endeavouros.com/t/firejail-or-apparmour/69867" target="_blank" rel="noopener noreferrer">EndeavourOS Forum - Firejail or AppArmour</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.whonix.org/wiki/Whonix-Workstation_Security" target="_blank" rel="noopener noreferrer">Whonix - Whonix-Workstation Security</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://github.com/netblue30/firejail/discussions/6466" target="_blank" rel="noopener noreferrer">GitHub Discussions - How strong is the Firejail sandbox?</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://ramseytest.com/faraday-boxes-the-essential-guide-to-protect-your-technology/" target="_blank" rel="noopener noreferrer">Ramsey Test - Faraday Boxes: Everything You Need to Know</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.mirasafety.com/blogs/news/faraday-cages-guide" target="_blank" rel="noopener noreferrer">MIRA Safety - The Ultimate Guide to Faraday Cages</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.cloudwards.net/i2p-vs-tor/" target="_blank" rel="noopener noreferrer">Cloudwards.net - I2P vs Tor in 2025</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.witopia.com/blog/secure-my-email-the-best-way-to-encrypt-email" target="_blank" rel="noopener noreferrer">WiTopia - Why is SecureMyEmail™ the best way to encrypt email?</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.pcmag.com/picks/the-best-email-encryption-services" target="_blank" rel="noopener noreferrer">PCMag - The Best Email Encryption Services for 2025</a> (Acessado em 26 de maio de 2025)</li>
+                        <li><a href="https://www.secmail.com/" target="_blank" rel="noopener noreferrer">SecMail - SecMail</a> (Acessado em 26 de maio de 2025)</li>
+                    </ol>
+                </div>
+            </div>
+        </main>
+
+        <footer class="mt-12 pt-8 border-t border-gray-300 text-center text-sm text-gray-500">
+            <p>Este é um guia interativo para fins educacionais sobre segurança na Deep/Dark Web. A informação aqui apresentada baseia-se no "Guia Definitivo 2025". A navegação nestes ambientes acarreta riscos significativos. Proceda com extrema cautela e responsabilidade.</p>
+            <p>© 2025 Aplicação Interativa. Adaptado do Guia de Segurança Avançada.</p>
+        </footer>
+    </div>
+
+    <script>
+        const tabs = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const collapsibleTriggers = document.querySelectorAll('.collapsible-trigger');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(item => item.classList.remove('active'));
+                tab.classList.add('active');
+
+                const targetTab = tab.getAttribute('data-tab');
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                    if (content.id === targetTab) {
+                        content.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        collapsibleTriggers.forEach(trigger => {
+            trigger.addEventListener('click', () => {
+                const content = trigger.nextElementSibling;
+                content.classList.toggle('open');
+                trigger.setAttribute('aria-expanded', content.classList.contains('open'));
+                if (content.classList.contains('open')) {
+                    trigger.textContent = trigger.textContent.replace('expandir', 'recolher');
+                } else {
+                    trigger.textContent = trigger.textContent.replace('recolher', 'expandir');
+                }
+            });
+        });
+        
+        if (tabs.length > 0) {
+            const initialTab = document.querySelector('.tab-button.active');
+            if (initialTab) {
+                 const targetTab = initialTab.getAttribute('data-tab');
+                 document.getElementById(targetTab).classList.add('active');
+            } else {
+                tabs[0].click();
+            }
+        }
+
+        // Gemini API Integration
+        const apiKey = ""; // Intentionally blank, will be handled by the environment
+
+        async function callGeminiAPI(prompt, outputElement, loadingElement) {
+            loadingElement.style.display = 'block';
+            outputElement.style.display = 'none';
+            outputElement.innerHTML = '';
+
+            let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+            const payload = { contents: chatHistory };
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    console.error("API Error:", errorData);
+                    throw new Error(`Erro da API: ${response.status} ${response.statusText}. Detalhes: ${JSON.stringify(errorData.error?.message || errorData)}`);
+                }
+
+                const result = await response.json();
+
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    outputElement.innerHTML = text.replace(/\n/g, '<br>'); // Basic formatting for newlines
+                } else {
+                    console.error("Resposta da API inesperada:", result);
+                    outputElement.textContent = 'Não foi possível obter uma resposta da IA ou a resposta está vazia.';
+                }
+            } catch (error) {
+                console.error('Erro ao chamar a API Gemini:', error);
+                outputElement.textContent = `Erro ao comunicar com a IA: ${error.message}`;
+            } finally {
+                loadingElement.style.display = 'none';
+                outputElement.style.display = 'block';
+            }
+        }
+        
+        async function callGeminiAPIStructured(prompt, outputElement, loadingElement, responseSchema) {
+            loadingElement.style.display = 'block';
+            outputElement.style.display = 'none';
+            outputElement.innerHTML = '';
+
+            let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+            const payload = {
+                contents: chatHistory,
+                generationConfig: {
+                    responseMimeType: "application/json",
+                    responseSchema: responseSchema
+                }
+            };
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    console.error("API Error:", errorData);
+                    throw new Error(`Erro da API: ${response.status} ${response.statusText}. Detalhes: ${JSON.stringify(errorData.error?.message || errorData)}`);
+                }
+                
+                const result = await response.json();
+
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const jsonText = result.candidates[0].content.parts[0].text;
+                    try {
+                        const parsedJson = JSON.parse(jsonText);
+                        // Assuming the schema returns an object with a "checklistHTML" property
+                        if (parsedJson.checklistHTML) {
+                             outputElement.innerHTML = parsedJson.checklistHTML; // Directly insert HTML
+                        } else {
+                            outputElement.textContent = 'Resposta da IA não contém o formato esperado (checklistHTML).';
+                        }
+                    } catch (parseError) {
+                        console.error("Erro ao parsear JSON da API:", parseError, jsonText);
+                        outputElement.textContent = 'Erro ao processar a resposta da IA (formato JSON inválido).';
+                    }
+                } else {
+                    console.error("Resposta da API inesperada (structured):", result);
+                    outputElement.textContent = 'Não foi possível obter uma resposta estruturada da IA ou a resposta está vazia.';
+                }
+            } catch (error) {
+                console.error('Erro ao chamar a API Gemini (structured):', error);
+                outputElement.textContent = `Erro ao comunicar com a IA: ${error.message}`;
+            } finally {
+                loadingElement.style.display = 'none';
+                outputElement.style.display = 'block';
+            }
+        }
+
+
+        // Threat Analysis Feature
+        const threatInput = document.getElementById('threatInput');
+        const analyzeThreatButton = document.getElementById('analyzeThreatButton');
+        const threatAnalysisOutput = document.getElementById('threatAnalysisOutput');
+        const threatAnalysisLoading = document.getElementById('threatAnalysisLoading');
+
+        if (analyzeThreatButton) {
+            analyzeThreatButton.addEventListener('click', () => {
+                const userThreatDescription = threatInput.value.trim();
+                if (!userThreatDescription) {
+                    threatAnalysisOutput.textContent = 'Por favor, descreva um cenário de ameaça.';
+                    threatAnalysisOutput.style.display = 'block';
+                    return;
+                }
+                const prompt = `Você é um especialista em cibersegurança com foco na Dark Web. Analise a seguinte ameaça ou cenário descrito pelo usuário. Sua resposta deve ser formatada em HTML.
+                Forneça:
+                <h3>Análise Detalhada:</h3><p>[Sua análise aqui]</p>
+                <h3>Possível Tipo de Ameaça:</h3><p>[Ex: Malware, Phishing, Deanonimização, Exploit Zero-Day, Engenharia Social, etc.]</p>
+                <h3>Vetores de Ataque Comuns Associados:</h3><p>[Liste os vetores]</p>
+                <h3>Estratégias de Mitigação Recomendadas:</h3><ol><li>[Mitigação 1]</li><li>[Mitigação 2]</li><li>[Mitigação 3+]</li></ol>
+                Cenário do usuário: "${userThreatDescription}"`;
+                
+                callGeminiAPI(prompt, threatAnalysisOutput, threatAnalysisLoading);
+            });
+        }
+
+        // Personalized OPSEC Checklist Feature
+        const opsecProfileButtons = document.querySelectorAll('.opsec-profile-button');
+        const opsecChecklistOutput = document.getElementById('opsecChecklistOutput');
+        const opsecChecklistLoading = document.getElementById('opsecChecklistLoading');
+
+        if (opsecProfileButtons.length > 0) {
+            opsecProfileButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const userProfile = button.getAttribute('data-profile');
+                    const prompt = `Você é um especialista em OPSEC (Segurança Operacional). Crie uma checklist de segurança operacional detalhada e personalizada para o seguinte perfil de usuário que navega na Deep/Dark Web: '${userProfile}'.
+                    A checklist deve incluir de 7 a 10 passos críticos, práticos e acionáveis, cobrindo áreas como preparação do sistema, navegação segura, comunicação anônima, gestão de dados e comportamento online.
+                    Formate a resposta como um objeto JSON com uma única chave "checklistHTML", onde o valor é uma string contendo uma lista ordenada em HTML (\`<ol><li>Item conciso e acionável</li><li>Outro item...</li></ol>\`).
+                    Exemplo de formato JSON esperado: {"checklistHTML": "<ol><li>Use Tails OS a partir de um USB verificado.</li><li>Desative JavaScript no Tor Browser (nível 'O Mais Seguro').</li></ol>"}`;
+
+                    const opsecSchema = {
+                        type: "OBJECT",
+                        properties: {
+                            "checklistHTML": { "type": "STRING", "description": "Uma string HTML contendo uma lista ordenada (<ol>) com os itens da checklist." }
+                        },
+                        required: ["checklistHTML"]
+                    };
+                    callGeminiAPIStructured(prompt, opsecChecklistOutput, opsecChecklistLoading, opsecSchema);
+                });
+            });
+        }
+
+    </script>
+</body>
+</html>
